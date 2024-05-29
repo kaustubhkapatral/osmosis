@@ -16,7 +16,7 @@ permissions:
 jobs:
   release:
     name: Create release
-    runs-on: buildjet-4vcpu-ubuntu-2204
+    runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
@@ -28,6 +28,4 @@ jobs:
           make release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: 🧹 Clean release folder
-        run: |
-          sudo rm -rf dist
+

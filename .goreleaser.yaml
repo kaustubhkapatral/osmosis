@@ -4,64 +4,7 @@ env:
   - CGO_ENABLED=1
 
 builds:
-  - id: osmosisd-darwin-amd64
-    main: ./cmd/osmosisd/main.go
-    binary: osmosisd
-    hooks:
-      pre:
-        - wget https://github.com/CosmWasm/wasmvm/releases/download/{{ .Env.COSMWASM_VERSION }}/libwasmvmstatic_darwin.a -O /lib/libwasmvmstatic_darwin.a
-    env:
-      - CC=o64-clang
-      - CGO_LDFLAGS=-L/lib
-    goos:
-      - darwin
-    goarch:
-      - amd64
-    flags:
-      - -mod=readonly
-      - -trimpath
-    ldflags:
-      - -X github.com/cosmos/cosmos-sdk/version.Name=osmosis
-      - -X github.com/cosmos/cosmos-sdk/version.AppName=osmosisd
-      - -X github.com/cosmos/cosmos-sdk/version.Version={{ .Version }}
-      - -X github.com/cosmos/cosmos-sdk/version.Commit={{ .Commit }}
-      - -X github.com/cosmos/cosmos-sdk/version.BuildTags=netgo,ledger,static_wasm
-      - -w -s
-      - -linkmode=external
-    tags:
-      - netgo
-      - ledger
-      - static_wasm
-
-  - id: osmosisd-darwin-arm64
-    main: ./cmd/osmosisd/main.go
-    binary: osmosisd
-    hooks:
-      pre:
-        - wget https://github.com/CosmWasm/wasmvm/releases/download/{{ .Env.COSMWASM_VERSION }}/libwasmvmstatic_darwin.a -O /lib/libwasmvmstatic_darwin.a
-    env:
-      - CC=oa64-clang
-      - CGO_LDFLAGS=-L/lib
-    goos:
-      - darwin
-    goarch:
-      - arm64
-    flags:
-      - -mod=readonly
-      - -trimpath
-    ldflags:
-      - -X github.com/cosmos/cosmos-sdk/version.Name=osmosis
-      - -X github.com/cosmos/cosmos-sdk/version.AppName=osmosisd
-      - -X github.com/cosmos/cosmos-sdk/version.Version={{ .Version }}
-      - -X github.com/cosmos/cosmos-sdk/version.Commit={{ .Commit }}
-      - -X github.com/cosmos/cosmos-sdk/version.BuildTags=netgo,ledger,static_wasm
-      - -w -s
-      - -linkmode=external
-    tags:
-      - netgo
-      - ledger
-      - static_wasm
-
+  
   - id: osmosisd-linux-amd64
     main: ./cmd/osmosisd
     binary: osmosisd
@@ -92,49 +35,12 @@ builds:
       - muslc
       - osusergo
 
-  - id: osmosisd-linux-arm64
-    main: ./cmd/osmosisd
-    binary: osmosisd
-    hooks:
-      pre:
-        - wget https://github.com/CosmWasm/wasmvm/releases/download/{{ .Env.COSMWASM_VERSION }}/libwasmvm_muslc.aarch64.a -O /usr/lib/aarch64-linux-gnu/libwasmvm_muslc.a
-    goos:
-      - linux
-    goarch:
-      - arm64
-    env:
-      - CC=aarch64-linux-gnu-gcc
-    flags:
-      - -mod=readonly
-      - -trimpath
-    ldflags:
-      - -X github.com/cosmos/cosmos-sdk/version.Name=osmosis 
-      - -X github.com/cosmos/cosmos-sdk/version.AppName=osmosisd 
-      - -X github.com/cosmos/cosmos-sdk/version.Version={{ .Version }} 
-      - -X github.com/cosmos/cosmos-sdk/version.Commit={{ .Commit }}
-      - -X github.com/cosmos/cosmos-sdk/version.BuildTags=netgo,ledger,muslc,osusergo
-      - -w -s
-      - -linkmode=external
-      - -extldflags '-Wl,-z,muldefs -static -lm'
-    tags:
-      - netgo
-      - ledger
-      - muslc
-      - osusergo
-
-universal_binaries:
-  - id: osmosisd-darwin-universal
-    ids:
-      - osmosisd-darwin-amd64
-      - osmosisd-darwin-arm64
-    replace: false
-
 archives:
   - id: zipped
     builds:
       # - osmosisd-darwin-universal
       - osmosisd-linux-amd64
-      - osmosisd-linux-arm64
+      #- osmosisd-linux-arm64
       # - osmosisd-darwin-amd64
       # - osmosisd-darwin-arm64
     name_template: "{{.ProjectName}}-{{ .Version }}-{{ .Os }}-{{ .Arch }}"
@@ -145,7 +51,7 @@ archives:
     builds:
       # - osmosisd-darwin-universal
       - osmosisd-linux-amd64
-      - osmosisd-linux-arm64
+      #- osmosisd-linux-arm64
       # - osmosisd-darwin-amd64
       # - osmosisd-darwin-arm64
     name_template: "{{.ProjectName}}-{{ .Version }}-{{ .Os }}-{{ .Arch }}"
@@ -164,7 +70,7 @@ changelog:
 # Docs: https://goreleaser.com/customization/release/
 release:
   github:
-    owner: osmosis-labs
+    owner: kaustubhkapatral
     name: osmosis
   replace_existing_draft: true
   header: |
