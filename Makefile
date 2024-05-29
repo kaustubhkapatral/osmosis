@@ -181,9 +181,6 @@ release:
 		--rm \
 		-e GITHUB_TOKEN=$(GITHUB_TOKEN) \
 		-e COSMWASM_VERSION=$(COSMWASM_VERSION) \
-		-v /var/run/docker.sock:/var/run/docker.sock \
-		-v `pwd`:/go/src/osmosisd \
-		-w /go/src/osmosisd \
 		$(GORELEASER_IMAGE) \
 		release \
 		--clean
