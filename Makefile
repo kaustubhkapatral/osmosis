@@ -182,6 +182,8 @@ release:
 		-e GITHUB_TOKEN=$(GITHUB_TOKEN) \
 		-e COSMWASM_VERSION=$(COSMWASM_VERSION) \
 		$(GORELEASER_IMAGE) \
+		-v `pwd`:/go/src/osmosisd \
+		-w /go/src/osmosisd \
 		release \
 		--clean
 else
