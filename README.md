@@ -1,4 +1,4 @@
-# Osmosis
+# Osmosis-test
 
 ![Banner!](assets/banner.png)
 

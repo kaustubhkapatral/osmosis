@@ -4,12 +4,10 @@
 name: Create release
 
 on:
-  workflow_dispatch:
-    inputs:
-      release_tag:
-        description: "The desired tag for the release (e.g. v0.1.0)."
-        required: true
-
+  push:
+    # Pattern matched against refs/tags
+    tags:        
+      - '**' 
 permissions:
   contents: write
 
